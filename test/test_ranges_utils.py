@@ -18,12 +18,11 @@ def assert_rs( rs, ranges_list, num=-1, eof=True, inner_next=False ):
     if inner_next:
       assert rs.inner_next() == ranges_list[i]
     else:
-      assert rs.next() == ranges_list[i]
+      assert next(rs) == ranges_list[i]
 
   if eof:
-    assert rs.next() == None
-    assert rs.next() == None
-
+    with pytest.raises(StopIteration):
+      next(rs)
 
 def assert_many_rs( many_rs, ex_type=None, ex_value=None ):
   for [r,exp_output, *options] in many_rs:
@@ -37,7 +36,7 @@ def assert_many_rs( many_rs, ex_type=None, ex_value=None ):
       assert_rs( rs, exp_output, num=options["ex_at"]-1 )
 
       with pytest.raises(ex_type) as ex:
-        rs.next()
+        next(rs)
       
       assert ex.type == ex_type
       assert ex_value in str(ex.value)
