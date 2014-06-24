@@ -21,7 +21,7 @@ TBD
 # Our set of ranges (orderer by start)
 ranges = [ Range("A",30,50), Range("B",70,80), Range("C",80,100) ]
 
-# How to create a list of ranges that starts at 0 and covers all gaps
+# How to create a list of ranges that starts at 0 and covers all gaps?
 rs = RangeSequence( iter(ranges) )
 list(rs)
 >>> [[#None:0-30], [#A:30-50], [#None:50-70], [#B:70-80], [#C:80-100]]
