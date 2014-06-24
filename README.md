@@ -59,6 +59,7 @@ rs2 = RangeSequence( iter( [ Range(1,0,50), Range(2,70,100) ] )
 rm = RangesMerger( [rs1, rs2] )
 list(filter(lambda rs:all(rid is not None for rid in rs.rid), rm))
 >>> [[#['A11', 'A11']:20-40], [#['A12', 'A12']:40-60], [#['A', 'A']:60-80], [#['A2', 'A2']:80-100]]
+```
 
 ## Core Classes
 
