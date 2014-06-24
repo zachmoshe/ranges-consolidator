@@ -7,8 +7,11 @@ class RangeSequence:
     self.ranges_ended = False
     self.last_returned = None
 
-  def next( self ):
-    if self.ranges_ended: return None
+  def __iter__( self ):
+    return self
+
+  def __next__( self ):
+    if self.ranges_ended: raise StopIteration
 
     try:
       next_obj = next(self.ranges_iter)
@@ -17,7 +20,7 @@ class RangeSequence:
         self.ranges_ended = True
         return Range(None, self.last_returned.end, self.range_end)
 
-      return None
+      raise StopIteration
 
     self.last_returned = next_obj
     return next_obj
