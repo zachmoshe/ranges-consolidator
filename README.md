@@ -13,7 +13,11 @@ Merging 2 sources of ranges gives us back an iterator that returns `Range` objec
 
 
 ## Installation 
-TBD
+For now, the package is not in PyPI yet. To install, clone the GIT repository locally and run (from the project's root directory)
+```
+pip install .
+```
+Notice that ranges-merger uses python3 and sometimes, depends on your python installation, python will be `python3` and pip will be named `pip3`
 
 ## Basic Usage
 
