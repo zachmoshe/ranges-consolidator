@@ -1,3 +1,4 @@
+![Travis build status](https://api.travis-ci.org/zachmoshe/ranges-merger.svg?branch=master)
 ranges-merger
 =============
 
