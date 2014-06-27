@@ -1,16 +1,18 @@
-from ranges_merger import *
+from .core import Range
 
 class HRangesSequenceFlattener:
-  def __init__( self, range_sequence ):
+  def __init__( self, range_sequence, range_start=None, range_end=None ):
     self.rs = range_sequence
     self.stack = []
     self.ranges = []
-    self.last_end = 0
+    self.last_end = range_start or 0
     self.unused_range = None
     self.last_returned = None
+    # self.range_start = range_start
+    self.range_end = range_end
 
 
-
+  def next(self): return self.__next__()
   def __next__( self ):
     #print("--> next called. stack - %s , ranges - %s , last_end - %s" % (self.stack, self.ranges, self.last_end))
 
@@ -58,7 +60,12 @@ class HRangesSequenceFlattener:
           new_range = Range( self.stack[-1].rid, max(self.stack[-1].start, self.last_end), self.stack[-1].end )
         else:
           #print("<-- next() raising StopIteration")
-          raise StopIteration
+          if self.range_end and self.last_end < self.range_end:
+            re = self.range_end
+            self.range_end = None
+            return Range(None, self.last_end, re)
+          else:
+            raise StopIteration
 
       #print("returning %s" % (new_range))
       self.ranges.append( new_range )
@@ -77,8 +84,12 @@ class HRangesSequenceFlattener:
     else:
       try:
         tmp = next(self.rs)
-        if self.last_returned and tmp.start < self.last_returned.start:
-          raise ValueError( "ranges are not sorted in ascending order. (prev_range=%s , current_range=%s)" % ( self.last_returned, tmp) )
+        if self.last_returned:
+          if tmp.start < self.last_returned.start:
+            raise ValueError( "ranges are not sorted in ascending order. (prev_range=%s , current_range=%s)" % ( self.last_returned, tmp) )
+          elif any( not ( (tmp.start>=s.start and tmp.end<=s.end) or (tmp.start>= s.end) ) for s in self.stack):
+            raise ValueError( "ranges are not hierarchicaly sorted. (current_range=%s, current stack - %s)" % (tmp, self.stack) )
+
       except StopIteration:
         tmp = None
       self.last_returned = tmp

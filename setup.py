@@ -1,8 +1,9 @@
 from distutils.core import setup
+import ranges_merger
 
 setup(
 		name='ranges-merger',
-		version='1.0.0',
+		version=ranges_merger.__version__,
 		author='Zach Moshe',
 		author_email='zachmoshe@gmail.com',
 		packages=['ranges_merger'],

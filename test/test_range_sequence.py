@@ -36,10 +36,16 @@ class TestRangeSequence:
   def test_no_hierarchy_with_range_end(self):
     many_rs = [ 
       [ ranges( [ [1,10,20], [2,20,30] ] ), ranges( [ [None,0,10], [1,10,20], [2,20,30], [None, 30,40] ] ), { "range_end":40 } ],
-      [ ranges( [ [1,10,20], [2,20,30] ] ), ranges( [ [None,0,10], [1,10,20], [2,20,30] ] ), { "range_end":30 } ]
+      [ ranges( [ [1,10,20], [2,20,30] ] ), ranges( [ [None,0,10], [1,10,20], [2,20,30] ] ), { "range_end":30 } ],
+      [ ranges( [ [1,10,20], [2,20,30] ] ), ranges( [ [None,0,10], [1,10,20], [2,20,30] ] ), { "range_end":20 } ],
     ]
     assert_many_rs( many_rs )
 
+  def test_no_hierarchy_with_range_start(self):
+    many_rs = [
+      [ ranges( [ [1,10,20], [2,20,30] ] ), ranges( [ [None,0,10], [1,10,20], [2,20,30], [None, 30,40] ] ), { "range_start":-10 } ],
+      [ ranges( [ [1,10,20], [2,20,30] ] ), ranges( [ [None,0,10], [1,10,20], [2,20,30], [None, 30,40] ] ), { "range_start":40 } ],
+    ]
 
   def test_no_hierarchy_not_sorted(self):
     many_rs_ex = [ 
@@ -67,28 +73,32 @@ class TestRangeSequence:
     ]
     assert_many_rs( many_rs )
 
-    def test_hierarchy_sorted_with_range_end(self):
-      many_rs = [
-        [ ranges( [ [1,0,50], [2,20,30] ] ), ranges( [ [1,0,20], [2,20,30], [1,30,50], [None,50,60] ] ), { "range_end": 60 } ]
-        [ ranges( [ [1,0,50], [2,20,30] ] ), ranges( [ [1,0,20], [2,20,30], [1,30,50] ] ), { "range_end": 50 } ]
-      ]
+  def test_hierarchy_sorted_with_range_end(self):
+    many_rs = [
+      [ ranges( [ [1,0,50], [2,20,30] ] ), ranges( [ [1,0,20], [2,20,30], [1,30,50], [None,50,60] ] ), { "range_end": 60 } ],
+      [ ranges( [ [1,0,50], [2,20,30] ] ), ranges( [ [1,0,20], [2,20,30], [1,30,50] ] ), { "range_end": 50 } ]
+    ]
+    assert_many_rs( many_rs )
 
-    def test_hierarchy_not_sorted(self):
-      many_rs_ex = [ 
-        [ ranges( [ [1,10,20], [2,0,50] ] ), 2 ],
-        [ ranges( [ [1,10,20], [2,10,15], [3,0,20] ] ), 3 ],
-        [ ranges( [ [1,0,50], [2,0,100] ] ), 2 ],
-        [ ranges( [ [1,10,20], [2,15,20], [3,17,30] ] ), 3 ],
-        [ ranges( [ [1,0,50], [2,30,50], [3,40,45], [4,42,50] ] ), 4 ],
-        [ ranges( [ [1,0,50], [2,10,25], [3,20,25], [4,25,50], [5,30,50], [6,40,100] ] ), 6 ],
-        [ ranges( [ [1,0,50], [2,10,25], [3,20,25], [4,25,50], [5,30,50], [6,20,40] ] ), 6 ],
-        [ ranges( [ [1,0,50], [2,10,20], [3,30,60] ]), 3 ],
-      ]
-      assert_many_rs( many_rs_ex, ex_type=ValueError, ex_value="ranges are not sorted" )
+  def test_hierarchy_not_sorted(self):
+    many_rs_ex = [ 
+      [ ranges( [ [1,10,20], [2,0,50] ] ), ranges( [] ), { "ex_at": 1 } ],
+      [ ranges( [ [1,10,20], [2,10,15], [3,0,20] ] ), ranges( [] ) , { "ex_at": 1 } ],
+      [ ranges( [ [1,0,50], [2,10,25], [3,20,25], [4,25,50], [5,30,50], [6,20,40] ] ), ranges( [ [1,0,10], [2,10,20], [3,20,25] ] ), { "ex_at": 4 } ],
+    ]
+    assert_many_rs( many_rs_ex, ex_type=ValueError, ex_value="ranges are not sorted" )
 
 
+  def test_hierarchy_not_contained(self):
+    many_rs_ex = [ 
+      [ ranges( [ [1,0,50], [2,0,100] ] ), ranges( [] ), { "ex_at": 1 } ],
+      [ ranges( [ [1,10,20], [2,15,20], [3,17,30] ] ), ranges( [] ), { "ex_at": 1 } ],
+      [ ranges( [ [1,0,50], [2,30,50], [3,40,45], [4,42,50] ] ), ranges( [] ), { "ex_at": 1 } ],
+      [ ranges( [ [1,0,50], [2,10,20], [3,30,60] ]), ranges( [] ), { "ex_at": 1 } ],
+      [ ranges( [ [1,0,50], [2,10,25], [3,20,25], [4,25,50], [5,30,50], [6,40,100] ] ), ranges( [ [1,0,10], [2,10,20], [3,20,25] ] ), { "ex_at": 4 } ],
 
- 
+    ]
+    assert_many_rs( many_rs_ex, ex_type=ValueError, ex_value="ranges are not hierarchicaly sorted")
 
 
 

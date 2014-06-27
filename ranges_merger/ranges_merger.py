@@ -1,4 +1,4 @@
-from ranges_merger import *
+from .core import Range
 
 def next_range(range_iter):
   try:
@@ -18,6 +18,7 @@ class RangesMerger:
   def __iter__( self ):
     return self
     
+  def next(self): return self.__next__()
   def __next__( self ):
     if all( r is None for r in self.next_ranges): raise StopIteration
 
