@@ -106,5 +106,5 @@ list(rm)
 ## Tests
 In order to run tests (pytest):
 ```
-python3 -m pytest
+python -m pytest
 ```
