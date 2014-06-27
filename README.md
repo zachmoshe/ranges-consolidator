@@ -13,17 +13,18 @@ Merging 2 sources of ranges gives us back an iterator that returns `Range` objec
 
 
 ## Installation 
+Supported python versions - `2.7`, `3.4`
+
 For now, the package is not in PyPI yet. To install, clone the GIT repository locally and run (from the project's root directory)
 ```
 pip install .
 ```
-Notice that ranges-merger uses python3 and sometimes, depends on your python installation, python will be `python3` and pip will be named `pip3`
 
 ## Basic Usage
 
 ### Non-Hierarchical ranges (simple case)
 ```python
-# Our set of ranges (orderer by start)
+# Our set of ranges (ordered by start)
 ranges = [ Range("A",30,50), Range("B",70,80), Range("C",80,100) ]
 
 # How to create a list of ranges that starts at 0 and covers all gaps?
