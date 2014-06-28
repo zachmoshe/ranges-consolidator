@@ -7,7 +7,7 @@ class Range(object):
         self.rid, self.start, self.end = rid, start, end
 
     def __str__(self):
-        return "[#%s:%d-%d]" % (self.rid, self.start, self.end)
+        return "[%s:%d-%d]" % (self.rid, self.start, self.end)
 
     def __repr__(self):
         return self.__str__()
