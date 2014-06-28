@@ -1,3 +1,4 @@
+
 [![Build Status](https://travis-ci.org/zachmoshe/ranges-merger.svg?branch=master)](https://travis-ci.org/zachmoshe/ranges-merger)
 ranges-merger
 =============
@@ -30,7 +31,7 @@ ranges = [ Range("A",30,50), Range("B",70,80), Range("C",80,100) ]
 # How to create a list of ranges that starts at 0 and covers all gaps?
 rs = RangeSequence( iter(ranges) )
 list(rs)
->>> [[#None:0-30], [#A:30-50], [#None:50-70], [#B:70-80], [#C:80-100]]
+>>> [[None:0-30], [A:30-50], [None:50-70], [B:70-80], [C:80-100]]
 # (notice the gaps have ID=None)
 
 # Here is another set of ranges
@@ -41,7 +42,7 @@ rs2 = RangeSequence( iter(ranges2) )
 # The IDs will be a list of the IDs from every ranges source.
 rm = RangesMerger( [ rs, rs2 ] )
 list(rm)
->>> [[#[None, 1]:0-30], [#['A', 1]:30-50], [#[None, None]:50-70], [#['B', 2]:70-80], [#['C', 2]:80-100]] 
+>>> [[[None, 1]:0-30], [['A', 1]:30-50], [[None, None]:50-70], [['B', 2]:70-80], [['C', 2]:80-100]] 
 ```
 ### Hierarchical ranges
 ```python
@@ -51,7 +52,7 @@ ranges = [ Range("A",20,100), Range("A1",20,60), Range("A11",20,40), Range("A12"
 # RangeSequence will do the magic of flattening the hierarchy. Every segment will get the most granular ID.
 rs = RangeSequence( iter(ranges) )
 list(rs)
->>> [[#None:0-20], [#A11:20-40], [#A12:40-60], [#A:60-80], [#A2:80-100]]
+>>> [[None:0-20], [A11:20-40], [A12:40-60], [A:60-80], [A2:80-100]]
 
 # Merging is done exactly the same way. RangeSequence does all the hierarchy uplift, RangesMerger doesn't care if the inputs are hierarchical or not
 ```
@@ -64,7 +65,7 @@ rs1 = RangeSequence( iter( [ Range("A",30,50), Range("B",70,80), Range("C",80,10
 rs2 = RangeSequence( iter( [ Range(1,0,50), Range(2,70,100) ] )
 rm = RangesMerger( [rs1, rs2] )
 list(filter(lambda rs:all(rid is not None for rid in rs.rid), rm))
->>> [[#['A11', 'A11']:20-40], [#['A12', 'A12']:40-60], [#['A', 'A']:60-80], [#['A2', 'A2']:80-100]]
+>>> [[['A11', 'A11']:20-40], [['A12', 'A12']:40-60], [['A', 'A']:60-80], [['A2', 'A2']:80-100]]
 ```
 
 ## Core Classes
@@ -84,12 +85,12 @@ Initialized with an iterator over `Range` objects and is an iterator itself that
 ranges = [ Range("A",0,10), Range("B",20,30) ]
 rs = RangeSequence( iter(ranges) )
 list(rs)
->>> [[#A:0-10], [#None:10-20], [#B:20-30]]
+>>> [[A:0-10], [None:10-20], [B:20-30]]
 
 ranges = [ Range("A",5,10), Range("B",20,30) ]
 rs = RangeSequence( iter(ranges), range_end=40 )
 list(rs)
--> [[#None:0-5], [#A:5-10], [#None:10-20], [#B:20-30], [#None:30-40]]
+>>> [[None:0-5], [A:5-10], [None:10-20], [B:20-30], [None:30-40]]
 ```
 
 ### RangesMerger
@@ -100,7 +101,7 @@ rs1 = RangeSequence(iter([ Range("A",0,50), Range("A1",10,20), Range("A2",20,50)
 rs2 = RangeSequence(iter([ Range("C",0,60), Range("D",80,100), Range("D1",90,100) ]))
 rm = RangesMerger( [rs1, rs2] )
 list(rm)
--> [[#['A', 'C']:0-10], [#['A1', 'C']:10-20], [#['A2', 'C']:20-30], [#['A21', 'C']:30-40], [#['A2', 'C']:40-50], [#['B', 'C']:50-60], [#['B', None]:60-80], [#['B', 'D']:80-90], [#['B', 'D1']:90-100]] 
+>>> [[['A', 'C']:0-10], [['A1', 'C']:10-20], [['A2', 'C']:20-30], [['A21', 'C']:30-40], [['A2', 'C']:40-50], [['B', 'C']:50-60], [['B', None]:60-80], [['B', 'D']:80-90], [['B', 'D1']:90-100]] 
 ```
 
 ## Tests
