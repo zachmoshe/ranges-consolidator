@@ -109,3 +109,8 @@ In order to run tests (pytest):
 ```
 python -m pytest
 ```
+
+In order to run [`pylint`](http://www.pylint.org) (static code analysis):
+```
+pylint --rcfile=.pylintrc ranges_merger
+```
