@@ -28,17 +28,23 @@ def assert_many_rs(many_rs, ex_type=None, ex_value=None):
     for rs_cfg in many_rs:
         r, exp_output, options = rs_cfg[0], rs_cfg[1], rs_cfg[2:]
         options = options[0] if options else {}
-        if options and "range_end" in options:
-            rs = RangeSequence(iter(r), range_end=options["range_end"])
+        if options and any(x in options for x in ["range_start", "range_end"]):
+            rs = RangeSequence(iter(r), 
+                range_start=(options["range_start"] if "range_start" in options else None),
+                range_end=(options["range_end"] if "range_end" in options else None))
         else:
             rs = RangeSequence(iter(r))
 
-        if "ex_at" in options:
-            if options["ex_at"] > 1: 
-                assert_rs(rs, exp_output, num=options["ex_at"]-1)
-
+        if ex_type:
             with pytest.raises(ex_type) as ex:
-                print(next(rs))
+                assert_rs(rs, exp_output)
+
+        # if "ex_at" in options:
+        #     if options["ex_at"] > 1: 
+        #         assert_rs(rs, exp_output, num=options["ex_at"]-1)
+
+        #     with pytest.raises(ex_type) as ex:
+        #         next(rs)
             
             assert ex.type == ex_type
             assert ex_value in str(ex.value)
@@ -46,7 +52,7 @@ def assert_many_rs(many_rs, ex_type=None, ex_value=None):
         else:
             assert_rs(rs, exp_output)
 
-def build_ranges_merger(many_rs):
-    rs = [RangeSequence(iter(r)) for r in many_rs]
+def build_ranges_merger(many_rs, **options):
+    rs = [RangeSequence(iter(r), **options) for r in many_rs]
     return RangesMerger(rs)
 

@@ -7,10 +7,11 @@ class HRangesSequenceFlattener(object):
         self.range_sequence = range_sequence
         self.stack = []
         self.ranges = []
-        self.last_end = range_start or 0
+        self.last_end = None
         self.unused_range = None
         self.last_returned = None
         self.range_end = range_end
+        self.range_start = range_start
 
     def next(self): 
         return self.__next__()
@@ -34,7 +35,7 @@ class HRangesSequenceFlattener(object):
 
                 # if the next range is contained (or the first in stack)- 
                 # add it to the stack and keep adding all contained ones
-                if not self.stack or self.stack[-1].contain(next_range):
+                if not self.stack or self.stack[-1].contains(next_range):
                     self.stack.append(next_range)
                 else:
                     self.unused_range = next_range
@@ -45,7 +46,7 @@ class HRangesSequenceFlattener(object):
             found_range = None
             prev_rid = None
             for ind in range(len(self.stack)):
-                if self.stack[ind].start > self.last_end:
+                if self.stack[ind].start > self.last_end:   
                     found_range = self.stack[ind]
                     if ind > 0: 
                         prev_rid = self.stack[ind-1].rid
@@ -59,6 +60,8 @@ class HRangesSequenceFlattener(object):
                                       max(self.stack[-1].start, self.last_end), 
                                       self.stack[-1].end)
                 else:
+                    # Got to the end. Check if we need to add a last range 
+                    # according to range_end
                     if self.range_end and self.last_end < self.range_end:
                         range_end = self.range_end
                         self.range_end = None
@@ -81,6 +84,12 @@ class HRangesSequenceFlattener(object):
         else:
             try:
                 tmp = next(self.range_sequence)
+                if self.last_end == None:
+                    if self.range_start != None:
+                        self.last_end = min(self.range_start, tmp.start)
+                        self.range_start = None
+                    else:
+                        self.last_end = tmp.start
                 if self.last_returned:
                     if tmp.start < self.last_returned.start:
                         raise ValueError("ranges are not sorted in ascending order. (prev_range=%s , current_range=%s)" % (self.last_returned, tmp))

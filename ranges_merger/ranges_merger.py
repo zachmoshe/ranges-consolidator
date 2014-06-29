@@ -32,7 +32,9 @@ class RangesMerger(object):
 
         start, end = first_range.start, first_range.end
         if self.prev_end != None: 
-            start = max(start, self.prev_end) 
+            if start > self.prev_end:
+                end = start
+            start = self.prev_end
             
         # Find end
         for curr_range in self.next_ranges:

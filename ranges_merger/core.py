@@ -27,7 +27,7 @@ class Range(object):
     def __ne__(self, other):
         return not self == other
 
-    def contain(self, other):
+    def contains(self, other):
         """Checks if other is contained within self"""
         return other.start >= self.start and other.end <= self.end
 

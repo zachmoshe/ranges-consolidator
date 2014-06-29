@@ -18,7 +18,7 @@ def test_simple_nh_ranges():
     ])
 
 def test_identical_nh_ranges():
-    rm =build_ranges_merger( 
+    rm = build_ranges_merger( 
         [ranges([[1,0,10], [2,10,20], [3,30,40]])] * 2
     )
     assert list(rm) == ranges([
@@ -28,8 +28,10 @@ def test_identical_nh_ranges():
         [[3,3],30,40],
     ])
 
-    rm =build_ranges_merger( 
-        [ranges([[1,5,10], [2,10,20], [3,30,40]])] * 2
+def test_identical_nh_ranges_with_range_start():
+    rm = build_ranges_merger( 
+        [ranges([[1,5,10], [2,10,20], [3,30,40]])] * 2,
+        range_start=0
     )
     assert list(rm) == ranges([
         [[None, None],0,5],
@@ -39,13 +41,13 @@ def test_identical_nh_ranges():
         [[3,3],30,40],
     ])
 
+
 def test_completely_non_overlapping_ranges():
     rm = build_ranges_merger([
         ranges([[1,10,30], [2,50,60], [3,80,100]]),
         ranges([[4,150,160], [5,160,170], [6,180,200]])
     ])
     assert list(rm) == ranges([
-        [[None,None],0,10],
         [[1,None],10,30],
         [[None,None],30,50],
         [[2,None],50,60],
@@ -97,7 +99,6 @@ def test_overlapping_pyramids():
         ranges([[4,50,100], [5,60,90], [6,70,80]])
     ])
     assert list(rm) == ranges([
-        [[None,None],0,50],
         [[1,4],50,60],
         [[2,5],60,70],
         [[3,6],70,80],
