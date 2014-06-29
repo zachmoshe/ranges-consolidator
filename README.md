@@ -16,7 +16,7 @@ Merging 2 sources of ranges gives us back an iterator that returns `Range` objec
 ## Installation 
 Supported python versions - `2.7`, `3.4`
 
-For now, the package is not in PyPI yet. To install, clone the GIT repository locally and run (from the project's root directory)
+The package is not in PyPI yet. To install, clone the GIT repository locally and run (from the project's root directory)
 ```
 pip install .
 ```
