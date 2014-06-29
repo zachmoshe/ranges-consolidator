@@ -25,22 +25,22 @@ pip install .
 ### Gap filling
 `RangeSequence` will automatically handle gaps in the range stream. It can also recieve the `range_start` and `range_end` parameters to set the beginning and the end of the output stream. `range_start` defaults to `0` if not given. If `range_end` is not given, no range will be added after the last one.
 
-![Gap Filling example](http://raw.github.com/zachmoshe/ranges-merger/master/doc/images/gap_filling.svg)
+![Gap Filling example](http://zachmoshe.github.io/ranges-merger/images/gap_filling.svg)
 
 ### Flattening hierarchy
 `HRangesSequenceFlattener` (used in `RangeSequence`) will take care of "flattening" a hierarchy stream of ranges. When Flattening the hierarchy, we'd like to get the most granular `range_id` for every `Range` we've extracted. It's best illustrated in the following diagram:
 
-![Flattening Hierarchy](http://raw.github.com/zachmoshe/ranges-merger/master/doc/images/flattening_hierarchy.svg)
+![Flattening Hierarchy](http://zachmoshe.github.io/ranges-merger/images/flattening_hierarchy.svg)
 
 ### Basic ranges merging
 When merging a number of range streams together, we actually intersect them and return a stream of `Ranges` where the `id` is a list of all correspondant `id`s from all streams.
 
-![Basic Ranges Merging](http://raw.github.com/zachmoshe/ranges-merger/master/doc/images/basic_merging.svg)
+![Basic Ranges Merging](http://zachmoshe.github.io/ranges-merger/images/basic_merging.svg)
 
 ### Hierarchical ranges merging
 The same goes for hierarchical streams of `Range`s. Actually - after flattening them (which happens automatically by `RangeSequence`), this is exactly the case of [Basic Ranges Merging](#basic-ranges-merging)
 
-![Hierarchical Ranges Merging](http://raw.github.com/zachmoshe/ranges-merger/master/doc/images/hierarchical_merging.svg)
+![Hierarchical Ranges Merging](http://zachmoshe.github.io/ranges-merger/images/hierarchical_merging.svg)
 
 
 
