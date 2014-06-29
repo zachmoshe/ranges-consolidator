@@ -38,7 +38,7 @@ When merging a number of range streams together, we actually intersect them and 
 ![Basic Ranges Merging](http://raw.github.com/zachmoshe/ranges-merger/master/doc/images/basic_merging.svg)
 
 ### Hierarchical ranges merging
-The same goes for hierarchical streams of `Range`s. Actually - after flattening them (which happens automatically by `RangeSequence`), this is exactly the case of [Basic Ranges Merging](https://github.com/zachmoshe/ranges-merger/blob/master/README.md#)
+The same goes for hierarchical streams of `Range`s. Actually - after flattening them (which happens automatically by `RangeSequence`), this is exactly the case of [Basic Ranges Merging](#basic-ranges-merging)
 
 ![Hierarchical Ranges Merging](http://raw.github.com/zachmoshe/ranges-merger/master/doc/images/hierarchical_merging.svg)
 
