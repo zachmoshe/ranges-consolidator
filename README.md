@@ -21,7 +21,30 @@ For now, the package is not in PyPI yet. To install, clone the GIT repository lo
 pip install .
 ```
 
-## Basic Usage
+## Basic concepts
+### Gap filling
+`RangeSequence` will automatically handle gaps in the range stream. It can also recieve the `range_start` and `range_end` parameters to set the beginning and the end of the output stream. `range_start` defaults to `0` if not given. If `range_end` is not given, no range will be added after the last one.
+
+![Gap Filling example](http://raw.github.com/zachmoshe/ranges-merger/master/doc/images/gap_filling.svg)
+
+### Flattening hierarchy
+`HRangesSequenceFlattener` (used in `RangeSequence`) will take care of "flattening" a hierarchy stream of ranges. When Flattening the hierarchy, we'd like to get the most granular `range_id` for every `Range` we've extracted. It's best illustrated in the following diagram:
+
+![Flattening Hierarchy](http://raw.github.com/zachmoshe/ranges-merger/master/doc/images/flattening_hierarchy.svg)
+
+### Basic ranges merging
+When merging a number of range streams together, we actually intersect them and return a stream of `Ranges` where the `id` is a list of all correspondant `id`s from all streams.
+
+![Basic Ranges Merging](http://raw.github.com/zachmoshe/ranges-merger/master/doc/images/basic_merging.svg)
+
+### Hierarchical ranges merging
+The same goes for hierarchical streams of `Range`s. Actually - after flattening them (which happens automatically by `RangeSequence`), this is exactly the case of [Basic Ranges Merging](https://github.com/zachmoshe/ranges-merger/blob/master/README.md#)
+
+![Hierarchical Ranges Merging](http://raw.github.com/zachmoshe/ranges-merger/master/doc/images/hierarchical_merging.svg)
+
+
+
+## Basic usage
 
 ### Non-Hierarchical ranges (simple case)
 ```python
@@ -68,7 +91,7 @@ list(filter(lambda rs:all(rid is not None for rid in rs.rid), rm))
 >>> [[['A11', 'A11']:20-40], [['A12', 'A12']:40-60], [['A', 'A']:60-80], [['A2', 'A2']:80-100]]
 ```
 
-## Core Classes
+## Core classes
 
 ### Range
 A `Range` class has 3 properties - `rid`, `start`, `end`.
