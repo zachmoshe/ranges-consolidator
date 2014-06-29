@@ -25,6 +25,8 @@ pip install .
 ### Gap filling
 `RangeSequence` will automatically handle gaps in the range stream. It can also recieve the `range_start` and `range_end` parameters to set the beginning and the end of the output stream. If they are not given, the output stream will start with the first range and end with the last, using these parameters will cause the creation of a range at the beginning or the end (or both) with `rid`=`None`.
 
+In this example, `range_start` was set to `0` and `range_end` to `140`
+
 ![Gap Filling example](http://zachmoshe.github.io/ranges-merger/images/gap_filling.svg)
 
 ### Flattening hierarchy
