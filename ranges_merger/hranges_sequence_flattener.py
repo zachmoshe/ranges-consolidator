@@ -1,6 +1,8 @@
 from .core import Range
 
 class HRangesSequenceFlattener(object):
+    """Flatten a hierarchial source of ranges.
+    * Notice that ranges MUST be ordered by start (ASC) and from the latgest to the smallest (contained one)"""
     def __init__(self, range_sequence, range_start=None, range_end=None):
         self.range_sequence = range_sequence
         self.stack = []

@@ -1,5 +1,10 @@
 class Range(object):
+    """Defines a range with ID, start and end"""
     def __init__(self, rid, start, end):
+        """Constructs a Range object. 
+        Throws:
+            ValueError - if start > end or start == end
+        """
         if end < start: 
             raise ValueError("illegal range. end is smaller than start")
         if start == end: 
@@ -13,6 +18,7 @@ class Range(object):
         return self.__str__()
 
     def __eq__(self, other):
+        """2 Ranges are equal if the have the same rid,start,end"""
         return (other is not None and 
                     (self.rid == other.rid and 
                      self.start == other.start and 
@@ -22,5 +28,6 @@ class Range(object):
         return not self == other
 
     def contain(self, other):
+        """Checks if other is contained within self"""
         return other.start >= self.start and other.end <= self.end
 
