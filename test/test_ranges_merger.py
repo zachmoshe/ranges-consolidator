@@ -1,9 +1,9 @@
 import pytest
-from ranges_merger import *
+from ranges_consolidator import *
 from test_ranges_utils import *
 
 def test_simple_nh_ranges():
-    rm = build_ranges_merger([ 
+    rm = build_ranges_consolidator([ 
         ranges([[1,0,20], [2,20,40], [3,40,60]]) ,
         ranges([[4,10,30], [5,30,50], [6,50,70]]),
     ])
@@ -18,7 +18,7 @@ def test_simple_nh_ranges():
     ])
 
 def test_identical_nh_ranges():
-    rm = build_ranges_merger( 
+    rm = build_ranges_consolidator( 
         [ranges([[1,0,10], [2,10,20], [3,30,40]])] * 2
     )
     assert list(rm) == ranges([
@@ -29,7 +29,7 @@ def test_identical_nh_ranges():
     ])
 
 def test_identical_nh_ranges_with_range_start():
-    rm = build_ranges_merger( 
+    rm = build_ranges_consolidator( 
         [ranges([[1,5,10], [2,10,20], [3,30,40]])] * 2,
         range_start=0
     )
@@ -43,7 +43,7 @@ def test_identical_nh_ranges_with_range_start():
 
 
 def test_completely_non_overlapping_ranges():
-    rm = build_ranges_merger([
+    rm = build_ranges_consolidator([
         ranges([[1,10,30], [2,50,60], [3,80,100]]),
         ranges([[4,150,160], [5,160,170], [6,180,200]])
     ])
@@ -61,7 +61,7 @@ def test_completely_non_overlapping_ranges():
     ])
 
 def test_simple_hranges():
-    rm = build_ranges_merger([
+    rm = build_ranges_consolidator([
         ranges([[1,0,100], [2,0,50], [3,30,50], [4,80,100], [5,90,100]]),
         ranges([[10,0,50], [11,50,100]])
     ])
@@ -74,7 +74,7 @@ def test_simple_hranges():
     ])
 
 def test_hranges():
-    rm = build_ranges_merger([
+    rm = build_ranges_consolidator([
         ranges([[1,50,150], [2,50,100], [3,70,80], [4,120,150], [5,120,130], [6,200,230]]),
         ranges([[7,0,100], [8,30,80], [9,100,170], [10,100,130], [11,130,170], [12,150,170], [13,220,230]])
     ])
@@ -94,7 +94,7 @@ def test_hranges():
     ])
 
 def test_overlapping_pyramids():
-    rm = build_ranges_merger([
+    rm = build_ranges_consolidator([
         ranges([[1,50,100], [2,60,90], [3,70,80]]),
         ranges([[4,50,100], [5,60,90], [6,70,80]])
     ])

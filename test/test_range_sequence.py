@@ -1,5 +1,5 @@
 import pytest
-from ranges_merger import *
+from ranges_consolidator import *
 from test_ranges_utils import *
 
 class TestRange:
@@ -41,7 +41,7 @@ class TestRange:
         assert not Range(1,'a','i').contains(Range(2,'d','k'))
 
 
-class TestRangeSequence:  
+class TestRangeSource:  
     def test_no_hierarchy_sorted(self):
         many_rs = [
             [ranges([[1,10,20], [2,20,30], [3,30,40]]), 

@@ -7,8 +7,8 @@ def next_range(range_iter):
         return None
 
         
-class RangesMerger(object):
-    """Recieves multiple RangeSequence objects and is an iterator 
+class RangeSourcesConsolidator(object):
+    """Recieves multiple RangeSource objects and is an iterator 
     over the intersection of all into one merged sequence.
     Every ID of the merged ranges is a list of the IDs in every 
     source (or None if this ranges wasn't covered)"""

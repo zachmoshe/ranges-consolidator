@@ -1,6 +1,6 @@
 from .core import Range
 
-class RangeSequence(object):
+class RangeSource(object):
     """Receives an iterator of Range objects and is an iteretor itself 
     that flatten ranges hierarchy and fill gaps with ranges with 
     ID=None if needed.
