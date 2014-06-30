@@ -8,8 +8,10 @@ def next_range(range_iter):
 
         
 class RangesMerger(object):
-    """Recieves multiple RangeSequence objects and is an iterator over the intersection of all into one merged sequence.
-    Every ID of the merged ranges is a list of the IDs in every source (or None if this ranges wasn't covered)"""
+    """Recieves multiple RangeSequence objects and is an iterator 
+    over the intersection of all into one merged sequence.
+    Every ID of the merged ranges is a list of the IDs in every 
+    source (or None if this ranges wasn't covered)"""
     def __init__(self, range_seqs):
         self.range_seqs = range_seqs
         # init an array with the next item from every range
