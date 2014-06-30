@@ -35,12 +35,12 @@ In this example, `range_start` was set to `0` and `range_end` to `140`
 ![Flattening Hierarchy](http://zachmoshe.github.io/ranges-consolidator/images/flattening_hierarchy.svg)
 
 ### Basic ranges consolidating
-When consolidating a number of range streams together, we actually intersect them and return a stream of `Ranges` where the `id` is a list of all correspondant `id`s from all streams.
+When consolidating a number of range sources together, we actually intersect them and return a stream of `Ranges` where the `id` is a list of all correspondant `id`s from all streams.
 
 ![Basic Ranges Consolidating](http://zachmoshe.github.io/ranges-consolidator/images/basic_consolidating.svg)
 
 ### Hierarchical ranges consolidating
-The same goes for hierarchical streams of `Range`s. Actually - after flattening them (which happens automatically by `RangeSource`), this is exactly the case of [Basic Ranges Consolidating](#basic-ranges-consolidating)
+The same goes for hierarchical sources of `Range`s. Actually - after flattening them (which happens automatically by `RangeSource`), this is exactly the case of [Basic Ranges Consolidating](#basic-ranges-consolidating)
 
 ![Hierarchical Ranges Consolidating](http://zachmoshe.github.io/ranges-consolidator/images/hierarchical_consolidating.svg)
 
