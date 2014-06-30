@@ -16,7 +16,12 @@ Consolidating 2 sources of ranges gives us back an iterator that returns `Range`
 ## Installation 
 Supported python versions - `2.7`, `3.4`
 
-The package is not in PyPI yet. To install, clone the GIT repository locally and run (from the project's root directory)
+To install:
+```
+pip install ranges-consolidator
+```
+
+To install locally (not from python.org repository), clone the GIT repository and run (from the project's root directory)
 ```
 pip install .
 ```
