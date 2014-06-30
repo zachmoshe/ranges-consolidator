@@ -30,7 +30,7 @@ In this example, `range_start` was set to `0` and `range_end` to `140`
 ![Gap Filling example](http://zachmoshe.github.io/ranges-consolidator/images/gap_filling.svg)
 
 ### Flattening hierarchy
-`RangeSource` will also take care of "flattening" a hierarchy stream of ranges. When Flattening the hierarchy, we'd like to get the most granular `range_id` for every `Range` we've extracted. It's best illustrated in the following diagram:
+`RangeSource` will also take care of "flattening" a hierarchal source of ranges. When Flattening the hierarchy, we'd like to get the most granular `range_id` for every `Range` we've extracted. It's best illustrated in the following diagram:
 
 ![Flattening Hierarchy](http://zachmoshe.github.io/ranges-consolidator/images/flattening_hierarchy.svg)
 
