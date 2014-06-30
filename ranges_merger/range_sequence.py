@@ -1,11 +1,17 @@
 from .core import Range
 
-class HRangesSequenceFlattener(object):
-    """Flatten a hierarchial source of ranges.
-    * Notice that ranges MUST be ordered by start (ASC) and from the 
-      latgest to the smallest (contained one)"""
-    def __init__(self, range_sequence, range_start=None, range_end=None):
-        self.range_sequence = range_sequence
+class RangeSequence(object):
+    """Receives an iterator of Range objects and is an iteretor itself 
+    that flatten ranges hierarchy and fill gaps with ranges with 
+    ID=None if needed.
+    * Ranges MUST be ordered by start (ASC) and if hierarchical, also 
+      by size (from largest to smallest)
+    * Supports range_start and range_end to enforce adding ranges at 
+      the edges if not covered by the ranges source.
+    * Notice that range_start and range_end will NOT cut ranges that 
+      appeared in the source. Just add empty ranges if needed""" 
+    def __init__(self, range_iter, range_start=None, range_end=None):
+        self.range_iter = range_iter
         self.stack = []
         self.ranges = []
         self.last_end = None
@@ -13,6 +19,10 @@ class HRangesSequenceFlattener(object):
         self.last_returned = None
         self.range_end = range_end
         self.range_start = range_start
+
+
+    def __iter__(self):
+        return self
 
     def next(self): 
         return self.__next__()
@@ -84,7 +94,7 @@ class HRangesSequenceFlattener(object):
             return tmp
         else:
             try:
-                tmp = next(self.range_sequence)
+                tmp = next(self.range_iter)
                 if self.last_end == None:
                     if self.range_start != None:
                         self.last_end = min(self.range_start, tmp.start)
@@ -102,6 +112,7 @@ class HRangesSequenceFlattener(object):
 
             self.last_returned = tmp
             return tmp
+
 
 
 
