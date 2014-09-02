@@ -1,5 +1,6 @@
 
 [![Build Status](https://travis-ci.org/zachmoshe/ranges-consolidator.svg?branch=master)](https://travis-ci.org/zachmoshe/ranges-consolidator)
+[![PyPI version](https://badge.fury.io/py/ranges-consolidator.svg)](http://badge.fury.io/py/ranges-consolidator)
 ranges-consolidator
 ===================
 
